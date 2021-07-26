@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -x "$HOME/.shell" ];then
+    SHELL="$(readlink -f "$HOME/.shell")"
+    SHELL="${SHELL##*/}"
+    export SHELL
+    exec "$HOME/.shell" "$@"
+elif [ -x /bin/bash ];then
+    echo "falling back to /bin/bash"
+    export SHELL=bash
+    exec /bin/bash "$@"
+elif [ -x /bin/sh ];then
+    echo "falling back to /bin/sh"
+    export SHELL=sh
+    exec /bin/sh "$@"
+else
+    echo 'falling back to PATH-sh'
+    export SHELL=sh
+    exec sh "$@"
+fi
