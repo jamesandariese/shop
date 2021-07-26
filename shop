@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ -x "$HOME/.shell" ];then
     SHELL="$(readlink -f "$HOME/.shell")"
