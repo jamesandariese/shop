@@ -1,7 +1,16 @@
 #!/bin/sh
 
+rlf() {
+    RLR="$(readlink "$1")"
+    if [ $? -ne 0 ];then
+        echo "$1"
+    else
+        rlf "$RLR"
+    fi
+}
+
 if [ -x "$HOME/.shell" ];then
-    SHELL="$(readlink -f "$HOME/.shell")"
+    SHELL="$(rlf "$HOME/.shell")"
     SHELL="${SHELL##*/}"
     export SHELL
     exec "$HOME/.shell" "$@"
