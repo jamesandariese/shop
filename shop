@@ -13,17 +13,17 @@ if [ -x "$HOME/.shell" ];then
     SHELL="$(rlf "$HOME/.shell")"
     SHELL="${SHELL##*/}"
     export SHELL
-    exec "$HOME/.shell" "$@"
+    exec sudo -u $USER "$HOME/.shell" "$@"
 elif [ -x /bin/bash ];then
     echo "falling back to /bin/bash"
     export SHELL=bash
-    exec /bin/bash "$@"
+    exec sudo -u $USER /bin/bash "$@"
 elif [ -x /bin/sh ];then
     echo "falling back to /bin/sh"
     export SHELL=sh
-    exec /bin/sh "$@"
+    exec sudo -u $USER /bin/sh "$@"
 else
     echo 'falling back to PATH-sh'
     export SHELL=sh
-    exec sh "$@"
+    exec sudo -u $USER sh "$@" || exec sh "$@"
 fi
